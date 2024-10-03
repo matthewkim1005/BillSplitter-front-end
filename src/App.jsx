@@ -8,6 +8,7 @@ import SigninForm from './components/SigninForm/SigninForm';
 import TransactionList from './components/TransactionList/TransactionList';
 import TransactionDetails from './components/TransactionDetails/TransactionDetails';
 import TransactionSplitter from './components/TransactionSplitter/TransactionSplitter';
+import ItemForm from './components/ItemForm/ItemForm';
 import * as transactionService from './services/transactionService';
 import * as authService from '../src/services/authService';
 
@@ -39,6 +40,19 @@ const App = () => {
     navigate('/transactions');
   };
 
+  const handleDeleteTransaction = async (transactionId) => {
+    const deletedTransaction = await transactionService.deleteTransaction(transactionId);
+    setTransactions(transactions.filter((transaction) => transaction._id !== deletedTransaction._id));
+    navigate('/transactions');
+  };
+
+  const handleUpdateTransaction = async (transactionId, transactionFormData) => {
+    const updatedTransaction = await transactionService.update(transactionId, transactionFormData);
+
+    setTransactions(transactions.map((transaction) => (transactionId === transaction._id ? updatedTransaction : transaction)));
+
+    navigate(`/transactions/${transactionId}`);
+  };
 
   return (
     <>
@@ -50,8 +64,10 @@ const App = () => {
             <>
               <Route path="/" element={<Dashboard user={user} />} />
               <Route path="/transactions" element={<TransactionList transactions={transactions} />} />
-              <Route path="/transactions/:transactionId" element={<TransactionDetails transactions={transactions} />} />
+              <Route path="/transactions/:transactionId" element={ <TransactionDetails transactions={transactions} handleDeleteTransaction={handleDeleteTransaction} />} />
               <Route path="/transactions/new" element={<TransactionSplitter handleAddTransaction={handleAddTransaction} />} />
+              <Route path="/transactions/:transactionId/edit" element={<TransactionSplitter handleUpdateTransaction={handleUpdateTransaction} />} />
+              <Route path="/transactions/:transactionId/edit/:itemId/edit" element={<ItemForm />} />
             </>
           ) : (
             // Public Route:

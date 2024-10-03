@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import * as transactionService from '../../services/transactionService';
+import ItemForm from '../ItemForm/ItemForm';
 
 const TransactionSplitter = (props) => {
   const [formData, setFormData] = useState({
@@ -6,19 +9,40 @@ const TransactionSplitter = (props) => {
     price: '',
     buyers: [],
   });
+  const [transaction, setTransaction] = useState(null);
+  const { transactionId } = useParams();
+
+  useEffect(() => {
+    const fetchTransaction = async () => {
+      const transactionData = await transactionService.show(transactionId);
+      setFormData(transactionData);
+    };
+    if (transactionId) fetchTransaction();
+  }, [transactionId]);
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
+  const handleAddItem = async (itemFormData) => {
+    const newItem = await transactionService.createItem(transactionId, itemFormData);
+    setTransaction({ ...transaction, items: [...transaction.items, newItem] });
+};
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    props.handleAddTransaction(formData);
+    if (transactionId) {
+        props.handleUpdateTransaction(transactionId, formData);
+      } else {
+        props.handleAddTransaction(formData);
+      }
   };
 
   return (
     <main>
+        <ItemForm handleAddItem={handleAddItem} />
       <form onSubmit={handleSubmit}>
+        <h1>{transactionId ? 'Edit Transaction' : 'New Transaction'}</h1>
         <label htmlFor="name-input">Food Name</label>
         <input
           required

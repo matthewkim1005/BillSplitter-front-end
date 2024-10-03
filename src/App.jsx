@@ -22,9 +22,7 @@ const App = () => {
   useEffect(() => {
     const fetchAllTransactions = async () => {
       const transactionsData = await transactionService.index();
-
       setTransactions(transactionsData);
-
     };
     if (user) fetchAllTransactions();
   }, [user]);
@@ -37,7 +35,8 @@ const App = () => {
   const handleAddTransaction = async (transactionFormData) => {
     const newTransaction = await transactionService.create(transactionFormData);
     setTransactions([newTransaction, ...transactions]);
-    navigate('/transactions');
+    navigate(`/transactions/${newTransaction._id}`);
+    location.reload();
   };
 
   const handleDeleteTransaction = async (transactionId) => {

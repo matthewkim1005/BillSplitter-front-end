@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import * as authService from '../../services/authService';
+import * as transactionService from '../../services/transactionService';
 
 const TransactionList = (props) => {
     const [user, setUser] = useState(authService.getUser());
@@ -13,7 +14,7 @@ const TransactionList = (props) => {
                         <header>
                             {/* <h2>{transaction}</h2> */}
                             {transaction.owner._id === user._id && (
-                                <p>{transaction.owner.username} posted on {new Date(transaction.createdAt).toLocaleDateString()}</p>
+                                <p>{transaction.tag}: {transaction.owner.username} posted on {new Date(transaction.createdAt).toLocaleDateString()}</p>
                             )}
                         </header>
                     </article>

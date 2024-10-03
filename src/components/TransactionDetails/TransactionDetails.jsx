@@ -18,22 +18,11 @@ const TransactionDetails = (props) => {
         fetchTransaction();
     }, [transactionId]);
 
-    const handleAddItem = async (itemFormData) => {
-        const newItem = await transactionService.createItem(transactionId, itemFormData);
-        setTransaction({ ...transaction, items: [...transaction.items, newItem] });
-    };
-
-    const handleDeleteItem = async (itemId) => {
-        const deletedItem = await transactionService.deleteItem(itemId);
-        setTransaction({
-            ...transaction, items: transaction.items.filter((item) => item._id !== deletedItem._id),
-        });
-    };
-
     if (!transaction) return <main>Loading...</main>;
     return (
         <main>
             <header>
+                <h1>{transaction.tag}</h1>
                 <p>This transaction was posted on {new Date(transaction.createdAt).toLocaleDateString()} by {transaction.owner.username}</p>
                 {transaction.owner._id === user._id && (
                     <><button onClick={() => props.handleDeleteTransaction(transactionId)}>Delete</button></>
@@ -58,6 +47,9 @@ const TransactionDetails = (props) => {
                         </header>
                     </article>
                 ))}
+            </section>
+            <section>
+                <ItemForm />
             </section>
         </main>
     );

@@ -18,12 +18,18 @@ const TransactionDetails = (props) => {
         fetchTransaction();
     }, [transactionId]);
 
+    const handleAddItem = async (itemFormData) => {
+        const newItem = await transactionService.createItem(transactionId, itemFormData);
+        setTransaction({ ...transaction, items: [...transaction.items, newItem] });
+        location.reload();
+      };
+
     if (!transaction) return <main>Loading...</main>;
     return (
         <main>
             <header>
                 <h1>{transaction.tag}</h1>
-                <p>This transaction was posted on {new Date(transaction.createdAt).toLocaleDateString()} by {transaction.owner.username}</p>
+                <p key={transaction.createdAt}>This transaction was posted on {new Date(transaction.createdAt).toLocaleDateString()} by {transaction.owner.username}</p>
                 {transaction.owner._id === user._id && (
                     <><button onClick={() => props.handleDeleteTransaction(transactionId)}>Delete</button></>
                 )}
@@ -34,10 +40,10 @@ const TransactionDetails = (props) => {
                     <article key={item._id}>
                         <p> {item.name} - ${item.price}</p>
                         <header> Who bought {item.name}:
-                            {item.buyers.map((buyer) => (
+                            {/* {item.buyers.map((buyer) => (
                                 <article key={buyer._id}> {buyer} </article>
                             ))}
-                            <p>${item.price / (item.buyers.length)} each</p>
+                            <p>${item.price / Number(item.buyers.length)} each</p> */}
                             {transaction.owner._id === user._id && (
                                 <>
                                     <Link to={`/transactions/${transactionId}/edit/${item._id}/edit`}>Edit</Link>
@@ -49,7 +55,7 @@ const TransactionDetails = (props) => {
                 ))}
             </section>
             <section>
-                <ItemForm />
+                <ItemForm handleAddItem={handleAddItem}/>
             </section>
         </main>
     );

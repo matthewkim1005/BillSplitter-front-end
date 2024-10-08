@@ -1,68 +1,85 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* src/index.css */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+* {
+  box-sizing: border-box;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f2f4f8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: sans-serif;
+  background-color: rgba(240, 206, 176, 0.745);
+  
+  --primary: #00a0df;
+  --background: #f2f4f8;
+  --card-background: white;
+  --border: rgb(220, 220, 220);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+#root {
+  height: 100%;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  overflow: auto;
+  padding-top: 80px;
 }
+
+article img {
+  width: 80px;
+}
+
+h1, h3 { margin: 7px 0px 14px 0px; }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 28px;
+  font-weight: 600;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+h3 {
+  font-size: 20px;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+p {
+  margin: 0;
+  opacity: .4;
+  width: 100%;
+  font-size: 16px;
+  text-align: justify;
+  line-height: 28px;
+}
+
+a {
+  color: black;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  max-width: 500px;
+  border-radius: 5px;
+  flex-direction: column;
+  background-color: white;
+  padding: 21px 21px 28px 21px;
+  border: 1px solid rgb(220, 220, 220);
+  box-shadow: -1px 5px 19px -5px rgba(0,0,0,0.25);
+  -moz-box-shadow: -1px 5px 19px -5px rgba(0,0,0,0.25);
+  -webkit-box-shadow: -1px 5px 19px -5px rgba(0,0,0,0.25);
+}
+
+button, a {
+  cursor: pointer;
 }

@@ -7,6 +7,7 @@ const TransactionSplitter = (props) => {
         name: '',
         price: '',
         buyers: [],
+        people: 1
     });
     const [transaction, setTransaction] = useState(null);
     const { transactionId } = useParams();
@@ -28,6 +29,13 @@ const TransactionSplitter = (props) => {
         evt.preventDefault();
         props.handleAddTransaction(formData);
     };
+
+    let buyerList = [];
+    const renderBuyers = () => {
+        for (let i = 0; i < formData.people; i++) {
+            buyerList.push(<input required type="buyers" name="buyers" id="buyers-input" onChange={handleChange} />);
+        }
+    }
 
     return (
         <main>
@@ -65,6 +73,12 @@ const TransactionSplitter = (props) => {
                     <option value="19">19</option>
                     <option value="20">20</option>
                 </select>
+                <div> {renderBuyers()} </div>
+                <div onChange={handleChange}>
+                    {buyerList.map((buyer) => (
+                        <label htmlFor="buyerList-input"> {buyer} </label>
+                    ))}
+                </div>
                 <button type="submit">SUBMIT</button>
             </form>
         </main>

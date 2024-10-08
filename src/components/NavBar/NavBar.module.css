@@ -29,6 +29,10 @@
     margin-left: 35px;
     text-align: right;
   }
+
+  .container li:hover {
+    opacity: 0.5;
+  }
   
   @media only screen and (max-width: 414px) {
     .container ul {

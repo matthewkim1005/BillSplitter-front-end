@@ -4,6 +4,7 @@ import * as transactionService from '../../services/transactionService';
 import { AuthedUserContext } from '../../App';
 import { Link } from 'react-router-dom';
 import ItemForm from '../ItemForm/ItemForm';
+import styles from './TransactionDetails.module.css';
 
 const TransactionDetails = (props) => {
     const { transactionId } = useParams();
@@ -26,7 +27,7 @@ const TransactionDetails = (props) => {
 
     if (!transaction) return <main>Loading...</main>;
     return (
-        <main>
+        <main className={styles.container}>
             <header>
                 <h1>{transaction.tag}</h1>
                 <p key={transaction.createdAt}>This transaction was posted on {new Date(transaction.createdAt).toLocaleDateString()} by {transaction.owner.username}</p>
